@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1a0f2e">
+  <title>Luna — Mon cycle & santé</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- SPLASH SCREEN -->
+  <div id="splash" class="splash">
+    <div class="splash-inner">
+      <div class="splash-moon"></div>
+      <h1 class="splash-title">Luna</h1>
+      <p class="splash-sub">Votre cycle, votre santé</p>
+    </div>
+  </div>
+
+  <!-- APP WRAPPER -->
+  <div id="app" class="app hidden">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="moon-icon">☽</span>
+        <span class="app-name">Luna</span>
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" id="printBtn" title="Imprimer / Exporter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        </button>
+        <button class="icon-btn" id="themeToggle" title="Changer le thème">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ALERT BANNER -->
+    <div id="alertBanner" class="alert-banner hidden">
+      <span class="alert-icon">🔔</span>
+      <span id="alertText"></span>
+      <button onclick="document.getElementById('alertBanner').classList.add('hidden')">✕</button>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-tab="calendar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Calendrier</span>
+      </button>
+      <button class="nav-btn" data-tab="journal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        <span>Journal</span>
+      </button>
+      <button class="nav-btn" data-tab="health">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Santé</span>
+      </button>
+      <button class="nav-btn" data-tab="shopping">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span>Courses</span>
+      </button>
+      <button class="nav-btn" data-tab="rdv">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>RDV</span>
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- ===== TAB: CALENDRIER ===== -->
+      <section id="tab-calendar" class="tab-section active">
+        <!-- Phase Card -->
+        <div class="phase-card" id="phaseCard">
+          <div class="phase-moon-visual" id="phaseMoonVisual"></div>
+          <div class="phase-info">
+            <div class="phase-label" id="phaseLabel">Chargement…</div>
+            <div class="phase-day" id="phaseDay"></div>
+            <div class="phase-next" id="phaseNext"></div>
+          </div>
+        </div>
+
+        <!-- Cycle summary pills -->
+        <div class="cycle-pills">
+          <div class="cpill cpill-period">
+            <span class="cpill-dot"></span>
+            <div>
+              <div class="cpill-label">Règles</div>
+              <div class="cpill-val" id="pillPeriod">—</div>
+            </div>
+          </div>
+          <div class="cpill cpill-fertile">
+            <span class="cpill-dot"></span>
+            <div>
+              <div class="cpill-label">Fertilité</div>
+              <div class="cpill-val" id="pillFertile">—</div>
+            </div>
+          </div>
+          <div class="cpill cpill-ovul">
+            <span class="cpill-dot"></span>
+            <div>
+              <div class="cpill-label">Ovulation</div>
+              <div class="cpill-val" id="pillOvul">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="calendar-wrap">
+          <div class="cal-header">
+            <button class="cal-nav" id="calPrev">‹</button>
+            <span class="cal-month-label" id="calMonthLabel"></span>
+            <button class="cal-nav" id="calNext">›</button>
+          </div>
+          <div class="cal-weekdays">
+            <span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="cal-legend">
+            <div class="leg-item"><span class="leg-dot leg-period"></span>Règles</div>
+            <div class="leg-item"><span class="leg-dot leg-fertile"></span>Féconde</div>
+            <div class="leg-item"><span class="leg-dot leg-ovul"></span>Ovulation</div>
+            <div class="leg-item"><span class="leg-dot leg-rdv"></span>RDV</div>
+            <div class="leg-item"><span class="leg-dot leg-sick"></span>Maladie</div>
+          </div>
+        </div>
+
+        <!-- Saisie nouvelle période -->
+        <div class="card mt-card">
+          <h3 class="card-title">Saisir des règles</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Début</label>
+              <input type="date" id="inputStart" class="inp">
+            </div>
+            <div class="form-group">
+              <label>Fin</label>
+              <input type="date" id="inputEnd" class="inp">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Durée du cycle (jours)</label>
+            <input type="number" id="inputCycleLen" class="inp" value="28" min="20" max="45">
+          </div>
+          <button class="btn-primary" id="savePeriodBtn">Enregistrer</button>
+        </div>
+      </section>
+
+      <!-- ===== TAB: JOURNAL ===== -->
+      <section id="tab-journal" class="tab-section">
+        <div class="journal-header">
+          <h2 class="section-title">Journal de santé</h2>
+          <button class="btn-sm" id="newEntryBtn">+ Nouvelle entrée</button>
+        </div>
+
+        <!-- Formulaire nouvelle entrée -->
+        <div class="card hidden" id="entryForm">
+          <h3 class="card-title">Nouvelle entrée</h3>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="entryDate" class="inp">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select id="entryCategory" class="inp">
+              <option value="periode">🩸 Période menstruelle</option>
+              <option value="symptome">💊 Symptôme / douleur</option>
+              <option value="maladie">🤒 Maladie (rhume, gastro…)</option>
+              <option value="fievre">🌡️ Fièvre</option>
+              <option value="humeur">😊 Humeur / énergie</option>
+              <option value="note">📝 Note libre</option>
+            </select>
+          </div>
+          <div class="form-group" id="illnessTypeGroup" style="display:none">
+            <label>Type de maladie</label>
+            <div class="tag-picker" id="illnessTags">
+              <button type="button" class="tag-pick" data-val="rhume">🤧 Rhume</button>
+              <button type="button" class="tag-pick" data-val="gastro">🤢 Gastro</button>
+              <button type="button" class="tag-pick" data-val="angine">😮‍💨 Angine</button>
+              <button type="button" class="tag-pick" data-val="grippe">🤒 Grippe</button>
+              <button type="button" class="tag-pick" data-val="sinusite">👃 Sinusite</button>
+              <button type="button" class="tag-pick" data-val="migraine">🧠 Migraine</button>
+              <button type="button" class="tag-pick" data-val="autre" data-other>Autre</button>
+            </div>
+            <input type="text" id="illnessOther" class="inp mt-xs hidden" placeholder="Préciser…">
+          </div>
+          <div class="form-group" id="feverGroup" style="display:none">
+            <label>Température (°C)</label>
+            <input type="number" id="entryFever" class="inp" step="0.1" min="36" max="42" placeholder="ex: 38.5">
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <textarea id="entryNotes" class="inp inp-ta" placeholder="Décrivez vos symptômes, ressentis…" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Intensité / niveau</label>
+            <div class="intensity-picker" id="intensityPicker">
+              <button type="button" class="int-btn" data-val="1">1</button>
+              <button type="button" class="int-btn" data-val="2">2</button>
+              <button type="button" class="int-btn" data-val="3">3</button>
+              <button type="button" class="int-btn" data-val="4">4</button>
+              <button type="button" class="int-btn" data-val="5">5</button>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-secondary" id="cancelEntry">Annuler</button>
+            <button class="btn-primary" id="saveEntry">Enregistrer</button>
+          </div>
+        </div>
+
+        <!-- Filtres journal -->
+        <div class="journal-filters">
+          <button class="filter-btn active" data-filter="all">Tout</button>
+          <button class="filter-btn" data-filter="periode">Règles</button>
+          <button class="filter-btn" data-filter="maladie">Maladie</button>
+          <button class="filter-btn" data-filter="fievre">Fièvre</button>
+          <button class="filter-btn" data-filter="symptome">Symptôme</button>
+        </div>
+
+        <!-- Liste des entrées -->
+        <div id="journalList" class="journal-list"></div>
+
+        <!-- Stats maladies -->
+        <div class="card mt-card">
+          <h3 class="card-title">Fréquence des maladies</h3>
+          <div id="illnessStats" class="illness-stats"></div>
+        </div>
+      </section>
+
+      <!-- ===== TAB: SANTÉ ===== -->
+      <section id="tab-health" class="tab-section">
+        <h2 class="section-title">Santé & Nutrition</h2>
+
+        <!-- IMC & Calories -->
+        <div class="card">
+          <h3 class="card-title">Mon profil</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Taille (cm)</label>
+              <input type="number" id="healthHeight" class="inp" placeholder="165">
+            </div>
+            <div class="form-group">
+              <label>Poids (kg)</label>
+              <input type="number" id="healthWeight" class="inp" placeholder="60">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Âge</label>
+              <input type="number" id="healthAge" class="inp" placeholder="30">
+            </div>
+            <div class="form-group">
+              <label>Activité</label>
+              <select id="healthActivity" class="inp">
+                <option value="1.2">Sédentaire</option>
+                <option value="1.375">Légère (1-3j/sem)</option>
+                <option value="1.55" selected>Modérée (3-5j/sem)</option>
+                <option value="1.725">Active (6-7j/sem)</option>
+                <option value="1.9">Très active</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Objectif</label>
+            <div class="tag-picker">
+              <button type="button" class="tag-pick" data-group="goal" data-val="perte">Perte de poids</button>
+              <button type="button" class="tag-pick active" data-group="goal" data-val="maintien">Maintien</button>
+              <button type="button" class="tag-pick" data-group="goal" data-val="prise">Prise de masse</button>
+            </div>
+          </div>
+          <button class="btn-primary" id="calcHealthBtn">Calculer</button>
+
+          <div id="healthResults" class="health-results hidden">
+            <div class="health-metric">
+              <div class="hm-label">IMC</div>
+              <div class="hm-val" id="resIMC">—</div>
+              <div class="hm-sub" id="resIMCLabel">—</div>
+            </div>
+            <div class="health-metric">
+              <div class="hm-label">Calories/jour</div>
+              <div class="hm-val" id="resCal">—</div>
+              <div class="hm-sub">kcal recommandées</div>
+            </div>
+            <div class="health-metric">
+              <div class="hm-label">Poids idéal</div>
+              <div class="hm-val" id="resPoideal">—</div>
+              <div class="hm-sub">kg (fourchette)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Suivi du poids -->
+        <div class="card mt-card">
+          <h3 class="card-title">Suivi du poids</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" id="weightDate" class="inp">
+            </div>
+            <div class="form-group">
+              <label>Poids (kg)</label>
+              <input type="number" id="weightVal" class="inp" step="0.1" placeholder="60.0">
+            </div>
+          </div>
+          <button class="btn-primary" id="addWeightBtn">Ajouter</button>
+          <canvas id="weightChart" class="weight-chart"></canvas>
+          <div id="weightList" class="weight-list"></div>
+        </div>
+
+        <!-- Alimentation selon phase du cycle -->
+        <div class="card mt-card">
+          <h3 class="card-title">Alimentation & phase du cycle</h3>
+          <div id="cycleNutrition" class="cycle-nutrition">
+            <!-- filled by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== TAB: COURSES ===== -->
+      <section id="tab-shopping" class="tab-section">
+        <h2 class="section-title">Listes de courses</h2>
+
+        <div class="card">
+          <h3 class="card-title">Importer une liste</h3>
+          <p class="card-desc">Importez votre liste depuis Todoist, Bring, AnyList ou toute app exportant en .txt, .csv, .pdf ou .json</p>
+          <label class="file-drop" id="fileDropZone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Choisir un fichier ou glisser-déposer</span>
+            <span class="file-types">.txt · .csv · .json · .pdf</span>
+            <input type="file" id="shoppingFile" accept=".txt,.csv,.json,.pdf" hidden>
+          </label>
+        </div>
+
+        <!-- Liste manuelle -->
+        <div class="card mt-card">
+          <h3 class="card-title">Ma liste</h3>
+          <div class="form-row">
+            <input type="text" id="newItemInput" class="inp flex-1" placeholder="Ajouter un article…">
+            <select id="newItemCat" class="inp inp-sm">
+              <option value="legumes">🥦 Légumes</option>
+              <option value="fruits">🍎 Fruits</option>
+              <option value="viandes">🥩 Viandes</option>
+              <option value="laitiers">🧀 Laitiers</option>
+              <option value="feculents">🍞 Féculents</option>
+              <option value="boissons">🧃 Boissons</option>
+              <option value="Sucreries">🍭 Sucreries</option>
+              <option value="viennoiserie">🥐 Viennoiseries</option>
+              <option value="ménage">🧽 Ménage</option>
+              <option value="Hygiène">🧼 Hygiène et coquetteries</option>
+            </select>
+            <button class="btn-icon" id="addShoppingItem">+</button>
+          </div>
+          <div id="shoppingList" class="shopping-list"></div>
+          <div class="btn-row mt-card" id="shoppingActions" style="display:none">
+            <button class="btn-secondary" id="clearDoneItems">Supprimer cochés</button>
+            <button class="btn-primary" id="exportShoppingBtn">Exporter liste</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== TAB: RDV ===== -->
+      <section id="tab-rdv" class="tab-section">
+        <h2 class="section-title">Rendez-vous</h2>
+
+        <div class="card">
+          <h3 class="card-title">Ajouter un rendez-vous</h3>
+          <div class="form-group">
+            <label>Titre</label>
+            <input type="text" id="rdvTitle" class="inp" placeholder="ex: Gynécologue Dr. Dupont">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" id="rdvDate" class="inp">
+            </div>
+            <div class="form-group">
+              <label>Heure</label>
+              <input type="time" id="rdvTime" class="inp">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Lieu</label>
+            <input type="text" id="rdvPlace" class="inp" placeholder="Adresse ou cabinet">
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <textarea id="rdvNotes" class="inp inp-ta" rows="2" placeholder="Questions à poser, préparation…"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <div class="tag-picker">
+              <button type="button" class="tag-pick active" data-group="rdvtype" data-val="gyneco">👩‍⚕️ Gynéco</button>
+              <button type="button" class="tag-pick" data-group="rdvtype" data-val="medecin">🩺 Médecin</button>
+              <button type="button" class="tag-pick" data-group="rdvtype" data-val="autre">📋 Autre</button>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" id="saveRdvBtn">Enregistrer</button>
+            <button class="btn-secondary" id="exportIcsBtn">📅 Exporter .ics</button>
+          </div>
+          <div class="info-box mt-xs">
+            <strong>💡 Astuce Android :</strong> Appuyez sur "Exporter .ics" pour télécharger le fichier, puis ouvrez-le avec Google Calendar ou l'agenda Samsung pour l'ajouter automatiquement.
+          </div>
+        </div>
+
+        <!-- Liste RDV -->
+        <div class="card mt-card">
+          <h3 class="card-title">Mes rendez-vous</h3>
+          <div id="rdvList" class="rdv-list"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL JOUR -->
+  <div id="dayModal" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Jour</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div id="modalContent" class="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- PRINT MODAL -->
+  <div id="printModal" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Imprimer / Exporter</h3>
+        <button class="modal-close" id="printModalClose">✕</button>
+      </div>
+      <div class="modal-content">
+        <p style="margin-bottom:1rem;color:var(--text-muted)">Choisissez ce que vous souhaitez imprimer :</p>
+        <div class="print-options">
+          <button class="btn-secondary" onclick="printSection('historique')">📋 Historique des cycles</button>
+          <button class="btn-secondary" onclick="printSection('journal')">📓 Journal de santé</button>
+          <button class="btn-secondary" onclick="printSection('poids')">⚖️ Suivi du poids</button>
+          <button class="btn-secondary" onclick="printSection('rdv')">📅 Rendez-vous</button>
+          <button class="btn-primary" onclick="printSection('complet')">🖨️ Rapport complet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
