@@ -9,145 +9,349 @@
 
 ---
 
+# 🌙 Luna — Mon cycle & santé
+
+> Une application web simple, accessible et pensée pour faciliter le suivi du cycle menstruel au quotidien.
+
+**Luna** est une application web développée en **HTML, CSS et JavaScript**, avec une approche **local-first** : les informations sont enregistrées directement dans le navigateur de l'utilisateur.
+
+Le projet a été conçu avec une idée centrale : rendre le suivi du cycle **simple, visuel et accessible**, y compris pour une personne qui peut avoir des difficultés à lire ou à utiliser une interface classique.
+
+---
+
 ## ✨ Fonctionnalités
 
-### 📅 Calendrier du cycle
-- Visualisation mensuelle avec codes couleur :
-  - 🩸 Rouge/rose — jours de règles
-  - 🌿 Teal — fenêtre fertile
-  - 🌕 Ambre — ovulation estimée
-  - 🔮 Violet — rendez-vous médicaux
-  - 🟡 Jaune — épisodes de maladie
-- Prédictions automatiques sur **3 cycles futurs** (affichées en pointillés)
-- Calcul intelligent de la durée du cycle (moyenne sur les 6 derniers cycles)
-- Clic sur un jour → détail + ajout rapide d'une entrée journal ou d'un RDV
+### 🩸 Suivi des règles
 
-### 📓 Journal de santé
-- Catégories : règles, symptômes, maladie, fièvre, humeur, notes libres
-- Sélecteur de type de maladie : rhume, gastro, angine, grippe, sinusite, migraine…
-- Saisie de température pour les épisodes de fièvre
-- Indicateur d'intensité de 1 à 5
-- Filtre par catégorie
-- **Statistiques de fréquence des maladies** avec barres de progression
+* Enregistrement de la date de début des règles
+* Enregistrement de la date de fin
+* Calcul de la durée du cycle
+* Estimation du prochain cycle
+* Affichage du jour actuel du cycle
+* Visualisation des différentes phases du cycle
 
-### 💊 Santé & Nutrition
-- Calcul de l'**IMC** et interprétation (insuffisance pondérale → obésité)
-- **Calories journalières recommandées** selon la formule Mifflin-St Jeor
-- Prise en compte du niveau d'activité et de l'objectif (perte / maintien / prise de masse)
-- **Suivi du poids** avec graphique en courbe (canvas natif)
-- **Conseils alimentaires par phase du cycle** : menstruation, folliculaire, ovulation, lutéale
+### 📅 Calendrier
 
-### 🛒 Listes de courses
-- Import de fichiers depuis Todoist, Bring, AnyList ou toute app exportant en `.txt`, `.csv` ou `.json`
-- Glisser-déposer de fichier
-- Ajout manuel avec catégories (légumes, fruits, viandes, laitiers, féculents, boissons…)
-- Cochage et suppression des articles
-- Export de la liste en `.txt`
+Le calendrier permet de visualiser :
 
-### 📅 Rendez-vous médicaux
-- Saisie : titre, date, heure, lieu, notes, type (gynéco / médecin / autre)
-- **Export `.ics`** compatible avec Google Calendar, Samsung Calendar, Apple Calendar
-- Affichage des RDV sur le calendrier principal
-- Suppression individuelle
+* 🩸 les règles
+* 🌸 la période fertile estimée
+* 🥚 l'ovulation estimée
+* 📅 les rendez-vous
+* 🤒 les périodes de maladie
 
-### 🖨️ Impression & Export
-- Rapport imprimable par section : historique des cycles, journal, poids, RDV
-- Rapport complet en une page
-- Mise en page print optimisée (masquage des éléments de navigation)
+Les informations sont directement intégrées dans le calendrier de Luna.
 
 ---
 
-## 📱 Installation sur Android
+## 🎙️ Mode vocal
 
-1. Ouvrez `index.html` dans **Google Chrome**
-2. Appuyez sur le menu ⋮ → **"Ajouter à l'écran d'accueil"**
-3. Luna s'installe comme une application native
+L'une des fonctionnalités particulières de Luna est son **mode vocal**.
 
-**Pour ajouter un RDV à Google Calendar :**  
-Appuyez sur "📅 Exporter .ics" → ouvrez le fichier téléchargé → Google Calendar l'importe automatiquement avec un rappel 1h avant.
+L'objectif est de permettre une utilisation beaucoup plus simple lorsque la saisie classique est difficile.
+
+Exemple :
+
+> 🎙️ « J'ai mes règles »
+
+Luna récupère automatiquement la **date actuelle du téléphone**, puis demande :
+
+> « Nous sommes le 27 septembre 2026. Confirmes-tu que tu as tes règles aujourd'hui ? »
+
+L'utilisateur peut répondre :
+
+> **« Oui »**
+
+Luna enregistre alors automatiquement la période.
+
+### Le mode vocal comprend également :
+
+* 🎙️ reconnaissance vocale
+* 🔊 synthèse vocale
+* 🧠 interprétation de phrases simples
+* 📅 récupération automatique de la date locale
+* ✅ confirmation avant enregistrement
+* ❌ possibilité d'annuler
+* 🩸 bouton de secours « J'ai mes règles aujourd'hui »
+* 📱 utilisation adaptée aux smartphones
+
+La reconnaissance vocale dépend cependant des possibilités du navigateur utilisé et de l'autorisation donnée au microphone.
 
 ---
 
-## 🗂️ Structure du projet
+## 📔 Journal
 
+Luna permet également de conserver un journal personnel avec différentes informations liées au quotidien.
+
+Les entrées sont enregistrées localement et peuvent être consultées directement depuis l'application.
+
+---
+
+## ❤️ Santé & nutrition
+
+L'application propose également des informations et outils autour :
+
+* des différentes phases du cycle
+* de la santé
+* de la nutrition
+* des symptômes et observations
+
+Ces informations sont destinées à accompagner le suivi personnel et **ne remplacent pas un avis médical**.
+
+---
+
+## ⚖️ Suivi du poids
+
+Luna permet :
+
+* d'enregistrer un poids
+* d'associer une date
+* de consulter l'historique
+* d'afficher l'évolution du poids
+
+---
+
+## 🛒 Liste de courses
+
+Une liste de courses intégrée permet de :
+
+* ajouter des articles
+* cocher les articles terminés
+* supprimer des articles
+* nettoyer les éléments terminés
+
+---
+
+## 👩‍⚕️ Rendez-vous
+
+L'application permet également de gérer les rendez-vous :
+
+* titre
+* date
+* heure
+* lieu
+* notes
+* type de rendez-vous
+
+Les rendez-vous peuvent également être exportés au format **`.ics`** afin de pouvoir être ajoutés à un calendrier compatible.
+
+---
+
+## 🌓 Thème clair / sombre
+
+Luna dispose d'un système de thème permettant de passer entre :
+
+* ☀️ mode clair
+* 🌙 mode sombre
+
+Le choix est conservé localement dans le navigateur.
+
+---
+
+# 🧩 Architecture du projet
+
+Le projet reste volontairement simple et ne nécessite pas de framework.
+
+```text
+Luna/
+│
+├── index.html
+├── styles.css
+├── app.js
+└── data.js
 ```
-luna/
-├── index.html   # Structure HTML & interface complète
-├── style.css    # Thème violet moderne, dark/light mode, responsive
-├── app.js       # Logique principale : navigation, rendu, interactions
-└── data.js      # Calculs du cycle, stockage localStorage, générateur ICS
+
+### `index.html`
+
+Contient la structure et les différentes sections de l'application :
+
+* calendrier
+* règles
+* journal
+* santé
+* poids
+* courses
+* rendez-vous
+
+### `styles.css`
+
+Contient toute la partie visuelle :
+
+* mise en page
+* couleurs
+* cartes
+* boutons
+* calendrier
+* responsive design
+* mode sombre
+* interface vocale
+
+### `app.js`
+
+Contient la logique principale :
+
+* navigation
+* calendrier
+* formulaires
+* affichage des données
+* calculs
+* interactions
+* mode vocal
+* synthèse vocale
+* reconnaissance vocale
+
+### `data.js`
+
+Contient la gestion des données locales de Luna.
+
+Les données sont stockées avec **`localStorage`**.
+
+---
+
+# 🔐 Données locales
+
+Luna utilise une approche **local-first**.
+
+Les données sont enregistrées dans le navigateur grâce à :
+
+```js
+localStorage
 ```
 
-Aucun framework, aucune dépendance, aucun bundler. Vanilla HTML/CSS/JS pur.
+Aucune base de données distante n'est nécessaire pour faire fonctionner l'application.
+
+Cela permet notamment de conserver localement :
+
+* les règles
+* le journal
+* le poids
+* les rendez-vous
+* la liste de courses
+* les paramètres
+* la durée du cycle
+
+> ⚠️ Les données étant stockées dans le navigateur, leur conservation dépend du navigateur et de l'appareil utilisé.
 
 ---
 
-## 🔒 Confidentialité
+# 📱 Utilisation sur smartphone
 
-**Toutes les données restent sur votre appareil.**  
-Luna utilise uniquement `localStorage` du navigateur. Aucune donnée n'est envoyée à un serveur. Aucun compte, aucune connexion internet requise après le premier chargement des polices Google Fonts.
+Luna est conçue pour fonctionner sur ordinateur mais également sur smartphone.
 
-> Pour une confidentialité totale, téléchargez les polices localement et supprimez le lien Google Fonts dans `index.html`.
+Pour tester le projet :
 
----
+1. Télécharger ou cloner le dépôt.
+2. Ouvrir `index.html`.
+3. Utiliser l'application dans un navigateur compatible.
 
-## 🧮 Algorithmes utilisés
+Pour le mode vocal :
 
-| Calcul | Méthode |
-|---|---|
-| Ovulation estimée | Cycle − 14 jours |
-| Fenêtre fertile | J − 5 à J + 1 autour de l'ovulation |
-| Durée du cycle | Moyenne glissante sur 6 cycles |
-| IMC | Poids (kg) / Taille² (m) |
-| Calories de base (BMR) | Mifflin-St Jeor femme |
-| Calories totales (TDEE) | BMR × coefficient d'activité |
-
----
-
-## 🚀 Démarrage rapide
-
-```bash
-# Clonez le dépôt
-git clone https://github.com/votre-pseudo/luna-cycle.git
-
-# Ouvrez directement dans votre navigateur
-open luna-cycle/index.html
-```
-
-Ou hébergez sur **GitHub Pages**, **Netlify** ou **Vercel** pour y accéder depuis votre mobile via URL.
+1. Autoriser l'accès au microphone.
+2. Appuyer sur **🎙️ Parler à Luna**.
+3. Dire par exemple :
+   **« J'ai mes règles »**.
+4. Écouter la confirmation.
+5. Répondre **« Oui »**.
 
 ---
 
-## 🎨 Personnalisation
+# 🛠️ Technologies utilisées
 
-Les couleurs et le thème sont entièrement définis via des **variables CSS** dans `style.css` :
-
-```css
-:root {
-  --violet-500: #7c4dce;   /* Couleur principale */
-  --rose-500:   #e879a4;   /* Règles */
-  --teal-500:   #2dd4bf;   /* Fenêtre fertile */
-  --amber-500:  #f59e0b;   /* Ovulation */
-}
-```
-
----
-
-## 📋 Compatibilité
-
-| Navigateur | Support |
-|---|---|
-| Chrome / Edge (Android & Desktop) | ✅ Complet |
-| Safari (iOS 16+) | ✅ Complet |
-| Firefox | ✅ Complet |
-| Samsung Internet | ✅ Complet |
+| Technologie          | Utilisation                    |
+| -------------------- | ------------------------------ |
+| HTML5                | Structure de l'application     |
+| CSS3                 | Interface et responsive design |
+| JavaScript           | Logique et interactions        |
+| LocalStorage         | Stockage local                 |
+| Web Speech API       | Reconnaissance vocale          |
+| Speech Synthesis API | Réponses vocales               |
+| ICS                  | Export des rendez-vous         |
 
 ---
 
-## 📄 Licence
+# 🎯 Objectif du projet
 
-MIT — libre d'utilisation, de modification et de redistribution.
+Luna est avant tout un projet de développement personnel autour d'une question :
+
+> **Comment rendre une application de suivi de cycle plus simple à utiliser pour tout le monde ?**
+
+Le mode vocal est particulièrement important dans cette démarche.
+
+L'idée n'est pas seulement de créer une application qui affiche des informations, mais de proposer une interface dans laquelle l'utilisateur peut **parler naturellement à l'application**.
 
 ---
 
-<p align="center">Fait avec 💜 pour toutes celles qui méritent un outil simple, privé et beau.<
+# 🚧 État du projet
+
+**Luna est actuellement un projet en développement.**
+
+Certaines fonctionnalités peuvent encore évoluer :
+
+* amélioration du mode vocal
+* amélioration de l'accessibilité
+* amélioration de l'interface mobile
+* enrichissement des informations
+* nouvelles fonctionnalités de suivi
+* amélioration des interactions vocales
+
+---
+
+# 💡 Pourquoi ce projet ?
+
+Luna fait partie de mes projets personnels de développement.
+
+Je m'intéresse particulièrement à la création de petites applications utiles, accessibles et faciles à utiliser.
+
+Ce projet me permet de travailler concrètement sur :
+
+* JavaScript
+* manipulation du DOM
+* stockage local
+* interfaces responsives
+* API du navigateur
+* reconnaissance vocale
+* synthèse vocale
+* conception d'une application complète sans framework
+
+---
+
+# 🚀 Pistes d'évolution
+
+Quelques idées envisagées pour les prochaines versions :
+
+* 🎙️ commandes vocales plus nombreuses
+* 🗣️ dialogue vocal plus naturel
+* 📱 amélioration de l'expérience mobile
+* 🔔 rappels
+* 📊 statistiques plus poussées
+* 📈 graphiques supplémentaires
+* 🗓️ amélioration du calendrier
+* 💾 système d'export/import des données
+* 🔒 amélioration de la gestion des données personnelles
+* 🌍 possibilité d'ajouter plusieurs langues
+
+---
+
+# ⚠️ Important
+
+Luna est un **outil personnel de suivi et d'organisation**.
+
+Les estimations concernant le cycle, l'ovulation ou la période fertile sont indicatives et ne doivent pas être utilisées comme méthode contraceptive ou comme diagnostic médical.
+
+En cas de question concernant sa santé, ses symptômes ou son cycle, il est recommandé de consulter un professionnel de santé.
+
+---
+
+# 👩‍💻 Projet
+
+**Luna — Mon cycle & santé**
+
+Projet personnel développé en **HTML / CSS / JavaScript**.
+
+---
+
+## ⭐ Si vous trouvez le projet intéressant
+
+N'hésitez pas à explorer le code, proposer des améliorations ou partager vos idées.
+
+Luna est avant tout un projet qui évolue au fil des expérimentations et de l'apprentissage du développement web.
